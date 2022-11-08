@@ -38,7 +38,7 @@ int main() {
 				scanf("%s", stringOpt);
 				printf("Por favor, digite-o novamente: ");
 				scanf("%s", confirmationOpt);
-				if (strcmp() != 0) {
+				if (strcmp(stringOpt, confirmationOpt) != 0) {
 					printf("Endereços de e-mail não conferem. Preencha novamente, por favor!\n");
 					goto optEmail;
 				}
