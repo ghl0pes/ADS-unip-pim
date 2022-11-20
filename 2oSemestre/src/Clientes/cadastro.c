@@ -10,6 +10,7 @@
 struct client_card {
 	char nome[30];
 	char email[30];
+	char cpf[11];
 	char telefone[30];
 	int tipoPessoa; //1 - Fisica; 2 - Jurídica
 };
@@ -24,21 +25,27 @@ int main() {
 	
 	int opt;
 	char stringOpt[30], retornoFuncao[30];
-	char mainOptionToLogin[30];
 	optRegistration: 
 		scanf("%d", &opt);
 	
-	switch(opt) {
-		case 1:	
-			strcpy(client.email, recieveEmail());
-			break;
-		case 2:
-			strcpy(client.telefone, recieveCellphone());
-			return printf("%s", client.telefone);
-			break;
-		default:
-			printf("Opção selecionada inválida! Digite a opção correta: \n", setlocale(LC_ALL,""));
-			goto optRegistration;
-	}
+		switch(opt) {
+			case 1:	
+				strcpy(client.email, recieveEmail());
+				break;
+			case 2:
+				strcpy(client.telefone, recieveCellphone());
+				break;
+			default:
+				printf("Opção selecionada inválida! Digite a opção correta: \n", setlocale(LC_ALL,""));
+				goto optRegistration;
+		}
+	
+	outCpfInfo();
+	strcpy(client.cpf, validateCpf());
+	
+	return printf("%s", client.cpf);
+	
+	system("pause");
+	return 0;
 	
 }

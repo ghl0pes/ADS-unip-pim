@@ -30,3 +30,16 @@ void headerRegistration () {
 	
 	horizontalLine();
 }
+
+void outCpfInfo() {
+	printf("\n\n");
+	horizontalLine();
+	
+	verticalLine(1);
+	printf("| Certo! Agora vamos receber suas                |\n", setlocale(LC_ALL,""));
+	printf("| informações pessoais!                          |\n", setlocale(LC_ALL,""));
+	verticalLine(1);
+	
+	horizontalLine();
+	printf("\n\n");
+}

@@ -10,7 +10,7 @@ char*recieveEmail () {
 	scanf("%s", email);
 	
 	if(strlen(email) == 0) {
-		printf("\n -- Endereço de email inválido. Preencha novamente, por favor! --\n\n");
+		printf("\n -- Endereço de email inválido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
 		recieveEmail();
 	}
 		
@@ -18,7 +18,7 @@ char*recieveEmail () {
 	scanf("%s", confirmationEmail);
 	
 	if (strcmp(email, confirmationEmail) != 0) {
-		printf("\n -- Endereços de e-mail não conferem. Preencha novamente, por favor! --\n\n");
+		printf("\n -- Endereços de e-mail não conferem. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
 		recieveEmail();
 	}	
 	
@@ -31,7 +31,7 @@ char*recieveEmail () {
 	}
 	
 	if((countAt != 1) || (countDot != 1)) {
-		printf("\n -- Endereço de e-mail inválido. Preencha novamente, por favor! --\n\n");
+		printf("\n -- Endereço de e-mail inválido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
 		recieveEmail();
 	}
 	
@@ -57,11 +57,48 @@ char*recieveCellphone () {
 	}
 	
 	if(invalidChars > 0) {
-		printf("O telefone possui caracteres inválidos. Preencha novamente, por favor! --\n\n");
+		printf("-- O telefone possui caracteres inválidos. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
 		recieveCellphone();
-	}	
+	}
 	
 	return phone;
+}
+
+
+char*validateCpf() {
+	char cpf[30];
+	
+	printf("Digite seu CPF para prosseguir: ");
+	scanf("%s", cpf);
+	
+	if(strlen(cpf) != 11) {
+		printf("-- O CPF não é válido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+		validateCpf();
+	}
+	
+	int i, j = 10, sum = 0;
+	for(i = 0; i < (strlen(cpf) - 3); i++){
+		sum += (cpf[i] - '0') * j;
+		j--;
+	}
+	
+	if(((sum * 10) % 11) != (cpf[9] - '0')) {
+		printf("-- O CPF não é válido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+		validateCpf();
+	}
+	
+	j = 11; sum = 0;
+	for(i = 0; i < (strlen(cpf) - 2); i++){
+		sum += (cpf[i] - '0') * j;
+		j--;
+	}
+	
+	if(((sum * 10) % 11) != (cpf[10] - '0')) {
+		printf("-- O CPF não é válido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+		validateCpf();
+	}
+	
+	return cpf;
 }
 
 
