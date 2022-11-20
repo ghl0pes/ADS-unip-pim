@@ -123,14 +123,54 @@ char*recieveBirthDate() {
 	return (strcat(strcat(strcat(strDay, "/"), strcat(strMonth, "/")), strYear));
 }
 
-char*recieveAddress() {
-	printf("Endereço: ");
+char**recieveAddress() {
 	char address[50];
 	
+	printf("Endereço: ");
 	fflush(stdin);
 	fgets(address, 50, stdin);
 	
 	return address;
+}
+
+char**recieveNumber() {
+	char addressNumber[10];
+	
+	printf("Número: ", setlocale(LC_ALL,""));
+	fflush(stdin);
+	fgets(addressNumber, 50, stdin);
+	
+	return addressNumber;
+}
+
+char**recieveComplement() {
+	char complement[30];
+	
+	printf("Complemento (tecle enter se não tiver): ", setlocale(LC_ALL,""));
+	fflush(stdin);
+	fgets(complement, 50, stdin);
+	
+	return complement;
+}
+
+char**recieveDistrict() {
+	char district[30];
+	
+	printf("Bairro: ", setlocale(LC_ALL,""));
+	fflush(stdin);
+	fgets(district, 50, stdin);
+	
+	return district;
+}
+
+char**recieveRef() {
+	char refAddress[30];
+	
+	printf("Referência do endereço: ", setlocale(LC_ALL,""));
+	fflush(stdin);
+	fgets(refAddress, 50, stdin);
+	
+	return refAddress;
 }
 
 
