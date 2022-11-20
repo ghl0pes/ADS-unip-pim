@@ -12,6 +12,8 @@ struct client_card {
 	char email[30];
 	char cpf[11];
 	char telefone[30];
+	char datanascimento[10];
+	char endereco[50];
 	int tipoPessoa; //1 - Fisica; 2 - Jurídica
 };
 
@@ -42,8 +44,9 @@ int main() {
 	
 	outCpfInfo();
 	strcpy(client.cpf, validateCpf());
+	strcpy(client.datanascimento, recieveBirthDate());
+	strcpy(client.endereco, recieveAddress());
 	
-	return printf("%s", client.cpf);
 	
 	system("pause");
 	return 0;

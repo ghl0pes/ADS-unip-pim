@@ -3,6 +3,8 @@
 #include <string.h>
 #include <locale.h>
 
+#include "./middlewares/validDate.c"
+
 char*recieveEmail () {
 	char email[30], confirmationEmail[30];
 	
@@ -99,6 +101,36 @@ char*validateCpf() {
 	}
 	
 	return cpf;
+}
+
+char*recieveBirthDate() {
+	Date getDate = {0};
+    int status = 0;
+    
+    printf("Data de nascimento (dd/mm/YYYY): ");
+    scanf("%d/%d/%d",&getDate.dd,&getDate.mm,&getDate.yyyy);
+    
+    if (isValidDate(&getDate) == 0) {
+    	printf("-- Data inválida. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+		validateCpf();
+	}
+	
+	char strDay[2], strMonth[2], strYear[4];
+	itoa(getDate.dd, strDay, 10);
+	itoa(getDate.mm, strMonth, 10);
+	itoa(getDate.yyyy, strYear, 10);
+	
+	return (strcat(strcat(strcat(strDay, "/"), strcat(strMonth, "/")), strYear));
+}
+
+char*recieveAddress() {
+	printf("Endereço: ");
+	char address[50];
+	
+	fflush(stdin);
+	fgets(address, 50, stdin);
+	
+	return address;
 }
 
 
