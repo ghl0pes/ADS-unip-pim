@@ -34,7 +34,7 @@ int main() {
 			break;
 		case 2:
 			strcpy(client.telefone, recieveCellphone());
-			return printf("%s", cliente.telefone);
+			return printf("%s", client.telefone);
 			break;
 		default:
 			printf("Opção selecionada inválida! Digite a opção correta: \n", setlocale(LC_ALL,""));

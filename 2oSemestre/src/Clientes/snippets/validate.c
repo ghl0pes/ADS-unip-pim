@@ -40,8 +40,8 @@ char*recieveEmail () {
 
 
 char*recieveCellphone () {
-	char phone;
-	char validChars[] = "01234567890+-()";
+	char phone[30];
+	char validChars[15] = "01234567890+-()";
 	
 	printf("Informe seu celular para continuar: ");
 	scanf("%s", phone);
@@ -49,16 +49,17 @@ char*recieveCellphone () {
 	int i, j, invalidChars = 0;
 	
 	for(i = 0; i < strlen(phone); i++) {
-		for(j = 0; j < strlen(validChars); j++) {
-			if(validChars[j] != phone[i])
-				invalidChars++;			
-		}
+		int valid = 0;
+		for(j = 0; j < strlen(validChars); j++) 
+			if(validChars[j] == phone[i]) valid++;	
+			
+		if(valid == 0) invalidChars++;
 	}
 	
 	if(invalidChars > 0) {
 		printf("O telefone possui caracteres inválidos. Preencha novamente, por favor! --\n\n");
 		recieveCellphone();
-	}
+	}	
 	
 	return phone;
 }
