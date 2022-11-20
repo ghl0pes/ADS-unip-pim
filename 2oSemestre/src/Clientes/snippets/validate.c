@@ -77,24 +77,24 @@ char*validateCpf() {
 	}
 	
 	int i, j = 10, sum = 0;
-	for(i = 0; i < (strlen(cpf) - 3); i++){
-		sum += (cpf[i] - '0') * j;
-		j--;
-	}
-	
-	if(((sum * 10) % 11) != (cpf[9] - '0')) {
-		printf("-- O CPF não é válido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
-		validateCpf();
-	}
-	
-	j = 11; sum = 0;
 	for(i = 0; i < (strlen(cpf) - 2); i++){
 		sum += (cpf[i] - '0') * j;
 		j--;
 	}
 	
+	if(((sum * 10) % 11) != (cpf[9] - '0')) {
+		printf("-- O primeiro dígito verificador não é válido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+		validateCpf();
+	}
+	
+	j = 11; sum = 0;
+	for(i = 0; i < (strlen(cpf) - 1); i++){
+		sum += (cpf[i] - '0') * j;
+		j--;
+	}
+	
 	if(((sum * 10) % 11) != (cpf[10] - '0')) {
-		printf("-- O CPF não é válido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+		printf("-- O segundo dígito verificador não é válido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
 		validateCpf();
 	}
 	
