@@ -44,3 +44,28 @@ void outCpfInfo() {
 	printf("\n\n");
 }
 
+void outAddressInfo() {
+	printf("\n\n");
+	horizontalLine();
+	
+	verticalLine(1);
+	printf("| Ótimo! Agora são suas informações              |\n", setlocale(LC_ALL,""));
+	printf("| de endereço!                                   |\n", setlocale(LC_ALL,""));
+	verticalLine(1);
+	
+	horizontalLine();
+	printf("\n\n");
+}
+
+void outPreferencesInfo() {
+	printf("\n\n");
+	horizontalLine();
+	
+	verticalLine(1);
+	printf("| Agora me conte. Quais são suas preferências?   |\n", setlocale(LC_ALL,""));
+	verticalLine(1);
+	
+	horizontalLine();
+	printf("\n\n");
+}
+

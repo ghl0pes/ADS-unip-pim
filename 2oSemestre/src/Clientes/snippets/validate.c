@@ -123,7 +123,23 @@ char*recieveBirthDate() {
 	return (strcat(strcat(strcat(strDay, "/"), strcat(strMonth, "/")), strYear));
 }
 
-char**recieveAddress() {
+char*recieveClientSex() {
+	char optSex;
+	
+	printf("Sexo: ");
+	printf("M - Masculino\nF - Feminino\nN - Prefiro não informar", setlocale(LC_ALL,""));
+	
+	scanf("%c", optSex);
+	
+	if(optSex != 'M' && optSex != 'F' && optSex != 'N') {
+		printf("Opção inválida! Preencha novamente, por favor.", setlocale(LC_ALL,""));
+		recieveClientSex();
+	}
+	
+	return optSex;
+}
+
+char*recieveAddress() {
 	char address[50];
 	
 	printf("Endereço: ");
@@ -133,7 +149,7 @@ char**recieveAddress() {
 	return address;
 }
 
-char**recieveNumber() {
+char*recieveNumber() {
 	char addressNumber[10];
 	
 	printf("Número: ", setlocale(LC_ALL,""));
@@ -143,7 +159,7 @@ char**recieveNumber() {
 	return addressNumber;
 }
 
-char**recieveComplement() {
+char*recieveComplement() {
 	char complement[30];
 	
 	printf("Complemento (tecle enter se não tiver): ", setlocale(LC_ALL,""));
@@ -153,7 +169,7 @@ char**recieveComplement() {
 	return complement;
 }
 
-char**recieveDistrict() {
+char*recieveDistrict() {
 	char district[30];
 	
 	printf("Bairro: ", setlocale(LC_ALL,""));
@@ -163,7 +179,7 @@ char**recieveDistrict() {
 	return district;
 }
 
-char**recieveRef() {
+char*recieveRef() {
 	char refAddress[30];
 	
 	printf("Referência do endereço: ", setlocale(LC_ALL,""));
@@ -173,11 +189,29 @@ char**recieveRef() {
 	return refAddress;
 }
 
-
-
-
-
-
-
-
-
+void optsSegmentChild (const int category) {
+	printf("Selecione uma subcategoria de %d: \n", category);
+	switch(category) {
+		case 1:
+			printf("11 - Indústria da Construção Civil\n", setlocale(LC_ALL,""));
+			printf("12 - Indústria da Automotiva\n", setlocale(LC_ALL,""));
+			printf("13 - Indústria Alimentícia\n", setlocale(LC_ALL,""));
+			printf("14 - Automação industrial\n", setlocale(LC_ALL,""));
+			printf("15 - Indústria energética\n", setlocale(LC_ALL,""));
+			printf("16 - Outro tipo de indústria\n", setlocale(LC_ALL,""));
+			break;
+		case 2:
+			printf("21 - Artigos de casa\n", setlocale(LC_ALL,""));
+			printf("22 - Actions figures\n", setlocale(LC_ALL,""));
+			printf("23 - Artigos geeks\n", setlocale(LC_ALL,""));
+			printf("24 - Material para setup de informática\n", setlocale(LC_ALL,""));
+			break;
+		case 3:
+			printf("31 - Material cirúrgico\n", setlocale(LC_ALL,""));
+			printf("32 - Material para consultório\n", setlocale(LC_ALL,""));
+			break;
+		case 4:
+			printf("41 - A combinar com o produtor\n", setlocale(LC_ALL,""));
+			break;
+	}
+}
