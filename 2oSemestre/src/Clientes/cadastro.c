@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
+#include <conio.h>
 
 //imported functions
 #include "./snippets/validate.c"
 #include "./snippets/outputs.c"
 
-struct client_card {
+typedef struct client_card {
 	//infos pessoais
 	char nome[30];
 	char email[30];
@@ -23,14 +24,59 @@ struct client_card {
 	char bairro[30];
 	char referenciaEndereco[30];
 	
-	//infos de interesse do cliente
+	//categorias de interesse do cliente
 	int categorias[10]; 
 	int categoriasFilhas[30];
 };
 
+int outCheckoutClient(struct client_card cliente) {
+	horizontalLine();
+	
+	printf("Confira seus dados para confirmar o cadastro na plataforma.\n\n", setlocale(LC_ALL,""));
+	
+	horizontalLine();
+	printf("--- Dados Pessoais ---\n");
+	printf("| Nome: %s\n", cliente.nome);
+	printf("| Email: %s\n", cliente.email);
+	printf("| CPF: %s\n", cliente.cpf);
+	printf("| Sexo: %c\n", cliente.sexo);
+	printf("| Telefone: %s\n", cliente.telefone);
+	printf("| Data de nascimento: %s\n\n", cliente.datanascimento);
+	
+	horizontalLine();
+	printf("--- Dados de endereço ---\n");
+	printf("| Endereço: %s\n", cliente.endereco);
+	printf("| Número: %s\n", cliente.numero);
+	printf("| Complemento: %s\n", cliente.complemento);
+	printf("| Bairro: %s\n", cliente.bairro);
+	printf("| Referência do endereço: %s\n\n", cliente.referenciaEndereco);
+	
+	horizontalLine();
+	printf("--- Categorias de interesse ---\n");
+	int i, j;
+	for(i = 0; i < sizeof(cliente.categorias); i++) {
+		printf("| -%s\n", cliente.categorias[i]); 
+		for(j = 0; j < sizeof(cliente.categoriasFilhas); j++) {
+			if((cliente.categorias[i] == 1 && (cliente.categoriasFilhas[j] > 10 || cliente.categoriasFilhas[j] <= 16)) ||
+				(cliente.categorias[i] == 2 && (cliente.categoriasFilhas[j] > 20 || cliente.categoriasFilhas[j] <= 24)) ||
+				(cliente.categorias[i] == 3 && (cliente.categoriasFilhas[j] > 30 || cliente.categoriasFilhas[j] <= 32)) ||
+				(cliente.categorias[i] == 4 && (cliente.categoriasFilhas[j] > 40 || cliente.categoriasFilhas[j] <= 41)))
+				printf("| --%s\n", cliente.categoriasFilhas[j]); 				
+		}
+	}
+	printf("\n\n");
+	horizontalLine();
+	
+	int check; 
+	printf("Deseja confirmar o cadastro? 1 - Sim / 0 - Não", setlocale(LC_ALL,""));
+	scanf("%d", &check);
+	
+	return check;
+}
+
 int main() {
 	struct client_card client;
-		
+	
 	headerRegistration();	
 		
 	int opt;
@@ -106,6 +152,13 @@ int main() {
 		scanf("%d", &optionSegment);
 		i++;
 	} while (optionSegment == 1);
+	
+	int checkout;
+	checkout = outCheckoutClient(client);
+	
+	if(checkout == 0)
+		clrscr();
+		goto optRegistration;
 	
 	system("pause");
 	return 0;
