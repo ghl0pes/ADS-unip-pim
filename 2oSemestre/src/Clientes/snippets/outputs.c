@@ -96,3 +96,16 @@ void optsSegmentChild (const int category) {
 	}
 }
 
+void success() {
+	printf("\n\n");
+	horizontalLine();
+	
+	verticalLine(1);
+	printf("| Cadastro realizado com sucesso! Aproveite a    |\n", setlocale(LC_ALL,""));
+	printf("| plataforma e boas compras :D                   |\n", setlocale(LC_ALL,""));
+	verticalLine(1);
+	
+	horizontalLine();
+	printf("\n\n");
+}
+

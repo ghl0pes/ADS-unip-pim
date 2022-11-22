@@ -54,28 +54,40 @@ int outCheckoutClient(client_card cliente) {
 	
 	horizontalLine();
 	printf("--- Categorias de interesse ---\n");
-	int i = 0, j = 0;
+	int i = 0;
 	while(cliente.categorias[i] != 0 ){
 		if(cliente.categorias[i] < 10) {
 			printf("| -%d\n", cliente.categorias[i]); 
-		
+			int j = 0;
 			while(cliente.categoriasFilhas[j] != 0) {
-				if((cliente.categorias[i] == 1 && (cliente.categoriasFilhas[j] > 10 || cliente.categoriasFilhas[j] <= 16)) ||
-					(cliente.categorias[i] == 2 && (cliente.categoriasFilhas[j] > 20 || cliente.categoriasFilhas[j] <= 24)) ||
-					(cliente.categorias[i] == 3 && (cliente.categoriasFilhas[j] > 30 || cliente.categoriasFilhas[j] <= 32)) ||
-					(cliente.categorias[i] == 4 && (cliente.categoriasFilhas[j] > 40 || cliente.categoriasFilhas[j] <= 41)))
-					printf("| --%d\n", cliente.categoriasFilhas[j]); 	
+				switch(cliente.categorias[i]) {
+					case 1:
+						if(cliente.categoriasFilhas[j] > 10 && cliente.categoriasFilhas[j] <= 16)
+							printf("| --%d\n", cliente.categoriasFilhas[j]); 
+						break;
+					case 2:
+						if(cliente.categoriasFilhas[j] > 20 && cliente.categoriasFilhas[j] <= 24)
+							printf("| --%d\n", cliente.categoriasFilhas[j]); 
+						break;
+					case 3:
+						if(cliente.categoriasFilhas[j] > 30 && cliente.categoriasFilhas[j] <= 32)
+							printf("| --%d\n", cliente.categoriasFilhas[j]); 
+						break;
+					case 4:
+						if(cliente.categoriasFilhas[j] > 40 && cliente.categoriasFilhas[j] <= 41)
+							printf("| --%d\n", cliente.categoriasFilhas[j]); 
+						break;
+				}
 				j++;			
 			}
-			
 			i++;
-		}
+		}		
 	}
-	printf("\n\n");
+	printf("\n");
 	horizontalLine();
 	
 	int check; 
-	printf("Deseja confirmar o cadastro? 1 - Sim / 0 - Não", setlocale(LC_ALL,""));
+	printf("Deseja confirmar o cadastro? 1 - Sim / 0 - Não\n", setlocale(LC_ALL,""));
 	scanf("%d", &check);
 	
 	return check;
@@ -83,58 +95,6 @@ int outCheckoutClient(client_card cliente) {
 
 int main() {
 	client_card client;
-	
-	/*int optionSegment = 0;
-	int i = 0, j = 0;
-	
-	chooseCategory:
-	do {
-		printf("Qual tipo de produto é de seu interesse?\n1 - Prototipação para indústria\n2 - Decoração\n3 - Área médica\n4 - Artigos personalizados\n5 - Outros\n0 - Não desejo cadastrar isso agora\n\n", setlocale(LC_ALL,""));
-		fflush(stdin);
-		scanf("%d", &client.categorias[i]);
-		
-		if(client.categorias[i] < 0 || client.categorias[i] > 5) {
-			printf("Categoria inválida!. Preencha novamente, por favor!\n\n", setlocale(LC_ALL,""));
-			goto chooseCategory;
-		} else if (client.categorias[i] == 0) {
-			break;
-		}
-		
-		int optSub;
-		chooseSubCategory:
-		do {
-			optSub = 0;
-			optsSegmentChild(client.categorias[i]);
-			scanf("%d", &client.categoriasFilhas[j]);
-			
-			if (
-				(client.categorias[i] == 1 && (client.categoriasFilhas[j] <= 10 || client.categoriasFilhas[j] > 16)) ||
-				(client.categorias[i] == 2 && (client.categoriasFilhas[j] <= 20 || client.categoriasFilhas[j] > 24)) ||
-				(client.categorias[i] == 3 && (client.categoriasFilhas[j] <= 30 || client.categoriasFilhas[j] > 32)) ||
-				(client.categorias[i] == 4 && (client.categoriasFilhas[j] <= 40 || client.categoriasFilhas[j] > 41))
-			) {
-				printf("Subcategoria inválida. Preencha novamente, por favor!\n\n");
-				goto chooseSubCategory;
-			}
-			
-			printf("Deseja cadastrar mais alguma subcategoria? 1 - Sim / 0 - Não\n", setlocale(LC_ALL,""));
-			scanf("%d", &optSub);
-			
-			j++;
-		} while (optSub == 1);
-		
-		
-		printf("\n-Deseja cadastrar mais uma categoria? 1 - Sim /0 - Não\n", setlocale(LC_ALL,""));
-		scanf("%d", &optionSegment);
-		i++;
-	} while (optionSegment == 1);
-	
-	int checkout;
-	checkout = outCheckoutClient(client);
-	
-	if(checkout == 0)
-		system("clear");
-//		goto optRegistration;*/
 	
 	headerRegistration();	
 		
@@ -215,7 +175,7 @@ int main() {
 	// -------------- CPF --------------
 	char cpf[15];
 	validateCpf:	
-		printf("Digite seu CPF para prosseguir: ");
+		printf("CPF: ");
 		fflush(stdin);
 		scanf("%s", cpf);
 		
@@ -248,12 +208,11 @@ int main() {
 		}
 		
 	strcpy(client.cpf, cpf);
-	printf("CPF salvo %s", client.cpf);
 	// -------------- SEXO DO CLIENTE --------------
 	char optSex;
 	recieveClientSex: 
 		printf("Sexo: \n");
-		printf("| M - Masculino\n| F - Feminino\n| N - Prefiro não informar\n", setlocale(LC_ALL,""));
+		printf("| M - Masculino\n| F - Feminino\n| N - Prefiro não informar\n\n", setlocale(LC_ALL,""));
 		
 		fflush(stdin);
 		scanf("%c", &optSex);
@@ -316,7 +275,7 @@ int main() {
 		printf("Qual tipo de produto é de seu interesse?\n1 - Prototipação para indústria\n2 - Decoração\n3 - Área médica\n4 - Artigos personalizados\n5 - Outros\n0 - Não desejo cadastrar isso agora\n\n", setlocale(LC_ALL,""));
 		fflush(stdin);
 		scanf("%d", &client.categorias[i]);
-		printf("%d", client.categorias[i]);
+		horizontalLine();
 		
 		if(client.categorias[i] < 0 || client.categorias[i] > 5) {
 			printf("Categoria inválida!. Preencha novamente, por favor!\n\n", setlocale(LC_ALL,""));
@@ -331,7 +290,7 @@ int main() {
 			optSub = 0;
 			optsSegmentChild(client.categorias[i]);
 			scanf("%d", &client.categoriasFilhas[j]);
-			
+			horizontalLine();
 			if (
 				(client.categorias[i] == 1 && (client.categoriasFilhas[j] <= 10 || client.categoriasFilhas[j] > 16)) ||
 				(client.categorias[i] == 2 && (client.categoriasFilhas[j] <= 20 || client.categoriasFilhas[j] > 24)) ||
@@ -357,10 +316,11 @@ int main() {
 	int checkout;
 	checkout = outCheckoutClient(client);
 	
-	if(checkout == 0)
+	if(checkout == 0) {
 		system("clear");
 		goto optRegistration;
-	
-	system("pause");
-	return 0;
+	} else {
+		success();
+		system("pause");
+	}
 }
