@@ -5,10 +5,10 @@
 #include <conio.h>
 
 //imported functions
-#include "./snippets/validate.c"
 #include "./snippets/outputs.c"
+#include "./snippets/middlewares/validDate.c"
 
-typedef struct client_card {
+typedef struct {
 	//infos pessoais
 	char nome[30];
 	char email[30];
@@ -27,9 +27,10 @@ typedef struct client_card {
 	//categorias de interesse do cliente
 	int categorias[10]; 
 	int categoriasFilhas[30];
-};
+} client_card;
 
-int outCheckoutClient(struct client_card cliente) {
+int outCheckoutClient(client_card cliente) {
+	system("cls");
 	horizontalLine();
 	
 	printf("Confira seus dados para confirmar o cadastro na plataforma.\n\n", setlocale(LC_ALL,""));
@@ -45,10 +46,10 @@ int outCheckoutClient(struct client_card cliente) {
 	
 	horizontalLine();
 	printf("--- Dados de endereço ---\n");
-	printf("| Endereço: %s\n", cliente.endereco);
-	printf("| Número: %s\n", cliente.numero);
-	printf("| Complemento: %s\n", cliente.complemento);
-	printf("| Bairro: %s\n", cliente.bairro);
+	printf("| Endereço: %s", cliente.endereco);
+	printf("| Número: %s", cliente.numero);
+	printf("| Complemento: %s", cliente.complemento);
+	printf("| Bairro: %s", cliente.bairro);
 	printf("| Referência do endereço: %s\n\n", cliente.referenciaEndereco);
 	
 	horizontalLine();
@@ -75,21 +76,72 @@ int outCheckoutClient(struct client_card cliente) {
 }
 
 int main() {
-	struct client_card client;
+	client_card client;
 	
 	headerRegistration();	
 		
 	int opt;
 	char verificationCode[10];
-	optRegistration: 
+	char email[30], confirmationEmail[30], phone[30], validChars[15] = "01234567890+-()";
+	int i, j, invalidChars = 0;
+	
+	optRegistration:
 		scanf("%d", &opt);
 	
 		switch(opt) {
 			case 1:	
-				strcpy(client.email, recieveEmail());				
-				break;
+				// -------------- EMAIL --------------
+				recieveEmail:
+				printf("Informe seu e-mail para continuar: ");
+				scanf("%s", email);
+				
+				if(strlen(email) == 0) {
+					printf("\n -- Endereço de email inválido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+					goto recieveEmail;
+				}
+					
+				printf("Por favor, confirme o email: ");
+				scanf("%s", confirmationEmail);
+				
+				if (strcmp(email, confirmationEmail) != 0) {
+					printf("\n -- Endereços de e-mail não conferem. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+					goto recieveEmail;
+				}	
+				
+				int i, countAt = 0, countDot = 0;
+				for (i = 0; i < strlen(email); i++) {
+					if((email[i] == '@'))
+						countAt++;
+					if((email[i] == '.'))
+						countDot++;
+				}
+				
+				if((countAt != 1) || (countDot != 1)) {
+					printf("\n -- Endereço de e-mail inválido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+					goto recieveEmail;
+				}
+				strcpy(client.email, email);				
+			break;
+			
 			case 2:
-				strcpy(client.telefone, recieveCellphone());
+				// -------------- CELULAR --------------
+				recieveCellphone:
+				printf("Informe seu celular para continuar: ");
+				scanf("%s", phone);
+				
+				for(i = 0; i < strlen(phone); i++) {
+					int valid = 0;
+					for(j = 0; j < strlen(validChars); j++) 
+						if(validChars[j] == phone[i]) valid++;	
+						
+					if(valid == 0) invalidChars++;
+				}
+				
+				if(invalidChars > 0) {
+					printf("-- O telefone possui caracteres inválidos. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+					goto recieveCellphone;
+				}
+				strcpy(client.telefone, phone);
 				break;
 			default:
 				printf("Opção selecionada inválida! Digite a opção correta: \n", setlocale(LC_ALL,""));
@@ -97,20 +149,108 @@ int main() {
 		}
 	
 	outCpfInfo();
-	strcpy(client.cpf, validateCpf());
-	strcpy(client.sexo, recieveClientSex());
-	strcpy(client.datanascimento, recieveBirthDate());
 	
+	printf("Digite seu nome completo: ");
+	fflush(stdin);
+	scanf("%s", client.nome);
+	
+	// -------------- CPF --------------
+	char cpf[30];
+	validateCpf:	
+		printf("Digite seu CPF para prosseguir: ");
+		fflush(stdin);
+		scanf("%s", cpf);
+		
+		if(strlen(cpf) != 11) {
+			printf("-- O CPF não é válido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+			goto validateCpf;
+		}
+		
+		i = 0; j = 10;
+		int sum = 0;
+		for(i = 0; i < (strlen(cpf) - 2); i++){
+			sum += (cpf[i] - '0') * j;
+			j--;
+		}
+		
+		if(((sum * 10) % 11) != (cpf[9] - '0')) {
+			printf("-- O primeiro dígito verificador não é válido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+			goto validateCpf;
+		}
+		
+		j = 11; sum = 0;
+		for(i = 0; i < (strlen(cpf) - 1); i++){
+			sum += (cpf[i] - '0') * j;
+			j--;
+		}
+		
+		if(((sum * 10) % 11) != (cpf[10] - '0')) {
+			printf("-- O segundo dígito verificador não é válido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+			goto validateCpf;
+		}
+	strcpy(client.cpf, cpf);
+	
+	// -------------- SEXO DO CLIENTE --------------
+	char optSex;
+	recieveClientSex: 
+		printf("Sexo: \n");
+		printf("| M - Masculino\n| F - Feminino\n| N - Prefiro não informar\n", setlocale(LC_ALL,""));
+		
+		fflush(stdin);
+		scanf("%c", &optSex);
+		
+		if((optSex != 'M' && optSex != 'm') && (optSex != 'F' && optSex != 'f') && (optSex != 'N' && optSex != 'n')) {
+			printf("Opção inválida! Preencha novamente, por favor.", setlocale(LC_ALL,""));
+			goto recieveClientSex;
+		}
+	client.sexo = optSex;
+	
+	// -------------- DATA DE ANIVERSÁRIO --------------
+	char strDay[2], strMonth[2], strYear[4];
+	Date getDate = {0};
+	int status = 0;
+	recieveBirthDate:	    
+	    printf("Data de nascimento (dd/mm/YYYY): ");
+	    scanf("%d/%d/%d",&getDate.dd,&getDate.mm,&getDate.yyyy);
+	    
+	    if (isValidDate(&getDate) == 0) {
+	    	printf("-- Data inválida. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+			goto recieveBirthDate;
+		}
+		
+		itoa(getDate.dd, strDay, 10);
+		itoa(getDate.mm, strMonth, 10);
+		itoa(getDate.yyyy, strYear, 10);
+		
+	strcpy(client.datanascimento, (strcat(strcat(strcat(strDay, "/"), strcat(strMonth, "/")), strYear)));
+	
+	// -------------- ENDEREÇO DO CLIENTE --------------
 	outAddressInfo();
-	strcpy(client.endereco, recieveAddress());
-	strcpy(client.numero, recieveNumber());
-	strcpy(client.complemento, recieveComplement());
-	strcpy(client.bairro, recieveDistrict());
-	strcpy(client.referenciaEndereco, recieveRef());
+	recieveAddress:
+		printf("Endereço: ");
+		fflush(stdin);
+		fgets(client.endereco, 50, stdin);
+		
+		printf("Número: ", setlocale(LC_ALL,""));
+		fflush(stdin);
+		fgets(client.numero, 50, stdin);
+		
+		printf("Complemento (tecle enter se não tiver): ", setlocale(LC_ALL,""));
+		fflush(stdin);
+		fgets(client.complemento, 50, stdin);
+		
+		printf("Bairro: ", setlocale(LC_ALL,""));
+		fflush(stdin);
+		fgets(client.bairro, 50, stdin);
+		
+		printf("Referência do endereço: ", setlocale(LC_ALL,""));
+		fflush(stdin);
+		fgets(client.referenciaEndereco, 50, stdin);
 	
 	outPreferencesInfo();
 	int categories[10];
-	int optionSegment, i = 0, j = 0;
+	int optionSegment;
+	i = 0; j = 0;
 	
 	chooseCategory:
 	do {
@@ -157,7 +297,7 @@ int main() {
 	checkout = outCheckoutClient(client);
 	
 	if(checkout == 0)
-		clrscr();
+		system("clear");
 		goto optRegistration;
 	
 	system("pause");

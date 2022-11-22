@@ -69,3 +69,30 @@ void outPreferencesInfo() {
 	printf("\n\n");
 }
 
+void optsSegmentChild (const int category) {
+	printf("Selecione uma subcategoria de %d: \n", category);
+	switch(category) {
+		case 1:
+			printf("11 - Indústria da Construção Civil\n", setlocale(LC_ALL,""));
+			printf("12 - Indústria da Automotiva\n", setlocale(LC_ALL,""));
+			printf("13 - Indústria Alimentícia\n", setlocale(LC_ALL,""));
+			printf("14 - Automação industrial\n", setlocale(LC_ALL,""));
+			printf("15 - Indústria energética\n", setlocale(LC_ALL,""));
+			printf("16 - Outro tipo de indústria\n", setlocale(LC_ALL,""));
+			break;
+		case 2:
+			printf("21 - Artigos de casa\n", setlocale(LC_ALL,""));
+			printf("22 - Actions figures\n", setlocale(LC_ALL,""));
+			printf("23 - Artigos geeks\n", setlocale(LC_ALL,""));
+			printf("24 - Material para setup de informática\n", setlocale(LC_ALL,""));
+			break;
+		case 3:
+			printf("31 - Material cirúrgico\n", setlocale(LC_ALL,""));
+			printf("32 - Material para consultório\n", setlocale(LC_ALL,""));
+			break;
+		case 4:
+			printf("41 - A combinar com o produtor\n", setlocale(LC_ALL,""));
+			break;
+	}
+}
+
