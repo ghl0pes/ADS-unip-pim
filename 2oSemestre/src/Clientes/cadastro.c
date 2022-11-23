@@ -100,7 +100,7 @@ int main() {
 		
 	int opt;
 	char verificationCode[10];
-	char email[30], confirmationEmail[30], phone[30], validChars[15] = "01234567890+-()";
+	char email[30], confirmationEmail[30], phone[30], validChars[15] = "01234567890+-()", confirmationCode[4];
 	int i, j, invalidChars = 0;
 	
 	optRegistration:
@@ -138,6 +138,16 @@ int main() {
 					printf("\n -- Endereço de e-mail inválido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
 					goto recieveEmail;
 				}
+				
+				confirmCode:
+					printf("Enviamos um código de confirmação /(1234)/ para o seu email, digite para continuar: ", setlocale(LC_ALL,""));
+					scanf("%s", confirmationCode);
+					
+					if(strcmp(confirmationCode, "1234") != 0) {
+						printf("\n -- Códido de confirmação inválido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+						goto confirmCode;
+					}
+					
 				strcpy(client.email, email);				
 			break;
 			
@@ -159,6 +169,16 @@ int main() {
 					printf("-- O telefone possui caracteres inválidos. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
 					goto recieveCellphone;
 				}
+				
+				confirmCode:
+					printf("Enviamos um código de confirmação /(1234)/ por SMS, digite para continuar: ", setlocale(LC_ALL,""));
+					scanf("%s", confirmationCode);
+					
+					if(strcmp(confirmationCode, "1234") != 0) {
+						printf("\n -- Códido de confirmação inválido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+						goto confirmCode;
+					}
+					
 				strcpy(client.telefone, phone);
 				break;
 			default:

@@ -34,7 +34,7 @@ typedef struct {
 	int cargo[10];
 	int emailFuncionario[10][50];
 } company_card;
-
+/*
 int outCheckoutClient(company_card company) {
 	system("cls");
 	horizontalLine();
@@ -43,7 +43,7 @@ int outCheckoutClient(company_card company) {
 	
 	horizontalLine();
 	printf("--- Dados Pessoais ---\n");
-	printf("| Nome: %s\n", company.nome);
+	printf("| Nome: %s\n", company.nomeEmpresa);
 	printf("| Email: %s\n", company.email);
 	printf("| CPF: %s\n", company.cpf);
 	printf("| Sexo: %c\n", company.sexo);
@@ -97,7 +97,7 @@ int outCheckoutClient(company_card company) {
 	scanf("%d", &check);
 	
 	return check;
-}
+}*/
 
 int main() {
 	company_card company;
@@ -106,7 +106,7 @@ int main() {
 		
 	int opt;
 	char verificationCode[10];
-	char email[30], confirmationEmail[30], phone[30], validChars[15] = "01234567890+-()";
+	char email[30], confirmationEmail[30], phone[30], validChars[15] = "01234567890+-()", confirmationCode[4];
 	int i, j, invalidChars = 0;
 	
 	optRegistration:
@@ -144,6 +144,15 @@ int main() {
 					printf("\n -- Endereço de e-mail inválido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
 					goto recieveEmail;
 				}
+				
+				confirmCode:
+					printf("Enviamos um código de confirmação /(1234)/ para o seu email, digite para continuar: ", setlocale(LC_ALL,""));
+					scanf("%s", confirmationCode);
+					
+					if(strcmp(confirmationCode, "1234") != 0) {
+						printf("\n -- Códido de confirmação inválido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+						goto confirmCode;
+					}
 				strcpy(company.email, email);				
 			break;
 			
@@ -165,6 +174,16 @@ int main() {
 					printf("-- O telefone possui caracteres inválidos. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
 					goto recieveCellphone;
 				}
+				
+				confirmCode:
+					printf("Enviamos um código de confirmação /(1234)/ por SMS, digite para continuar: ", setlocale(LC_ALL,""));
+					scanf("%s", confirmationCode);
+					
+					if(strcmp(confirmationCode, "1234") != 0) {
+						printf("\n -- Códido de confirmação inválido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+						goto confirmCode;
+					}
+					
 				strcpy(company.telefone, phone);
 				break;
 			default:
@@ -172,7 +191,7 @@ int main() {
 				goto optRegistration;
 		}
 	
-	outCpfInfo();
+	/*outCpfInfo();
 	
 	printf("Digite seu nome completo: ");
 	fflush(stdin);
@@ -327,5 +346,5 @@ int main() {
 	} else {
 		success();
 		system("pause");
-	}	
+	}	*/
 }
