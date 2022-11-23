@@ -211,7 +211,7 @@ int main() {
 	// -------------- SEXO DO CLIENTE --------------
 	char optSex;
 	recieveClientSex: 
-		printf("Sexo: \n");
+		printf("Gênero: \n", setlocale(LC_ALL,""));
 		printf("| M - Masculino\n| F - Feminino\n| N - Prefiro não informar\n\n", setlocale(LC_ALL,""));
 		
 		fflush(stdin);
