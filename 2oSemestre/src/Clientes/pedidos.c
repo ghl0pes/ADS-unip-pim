@@ -90,48 +90,48 @@ int main()
     printf("\nDIGITE -c- PARA CARTAO OU -b- PARA BOLETO\n");
     scanf("%c",&pagamento);
 
-    switch(pagamento)
-    {
-        case 'c':
+        if(pagamento == 'c' || pagamento == 'C')
+        {
         parcelamented: printf("escolha o numero de parcelas: \n");
         printf("1x\n2x\n3x\n4x\n5x\n");
         scanf("%d",&parcela);
         switch(parcela)
-        {
-            case 1: dvd = valor/1;
-                    printf("\n1x de R$%.2f",dvd);break;
-            case 2: dvd = valor/2;
-                    printf("\n2x de R$%.2f",dvd);break;
-            case 3: dvd = valor/3;
-                    printf("\n3x de R$%.2f",dvd);break;      
-            case 4: dvd = valor/4;
-                    printf("\n4x de R$%.2f",dvd);break;                 
-            case 5: dvd = valor/5;
-                    printf("\n5x de R$%.2f",dvd);break;
-            default: printf("*** ESCOLHA UM PARCELAMENTO ENTRE 1 E 5\n");
-                     Sleep(357);
-                     goto parcelamented;
-        }         
-        case 'C':  
-        parcelamento: printf("escolha o numero de parcelas: \n");
-        printf("1x\n2x\n3x\n4x\n5x\n");
-        scanf("%d",&parcela);
-        switch(parcela)
-        {
-            case 1: dvd = valor/1;
-                    printf("\n1x de R$%.2f",dvd);break;
-            case 2: dvd = valor/2;
-                    printf("\n2x de R$%.2f",dvd);break;
-            case 3: dvd = valor/3;
-                    printf("\n3x de R$%.2f",dvd);break;      
-            case 4: dvd = valor/4;
-                    printf("\n4x de R$%.2f",dvd);break;                 
-            case 5: dvd = valor/5;
-                    printf("\n5x de R$%.2f",dvd);break;
-            default: printf("*** ESCOLHA UM PARCELAMENTO ENTRE 1 E 5\n");
-                     Sleep(357);
-                     goto parcelamento;          
-
+                {
+                case 1: dvd = valor/1;
+                        printf("\n1x de R$%.2f",dvd);break;
+                case 2: dvd = valor/2;
+                        printf("\n2x de R$%.2f",dvd);break;
+                case 3: dvd = valor/3;
+                        printf("\n3x de R$%.2f",dvd);break;      
+                case 4: dvd = valor/4;
+                        printf("\n4x de R$%.2f",dvd);break;                 
+                case 5: dvd = valor/5;
+                        printf("\n5x de R$%.2f",dvd);break;
+                default: printf("*** ESCOLHA UM PARCELAMENTO ENTRE 1 E 5\n");
+                        Sleep(357);
+                        goto parcelamented;
+                }
         }
-    }
-}    
+        else if(pagamento =='b' || pagamento == 'B')
+        {
+                printf("\nO total do seu boleto e de R$%.2f\n",valor*0.95);
+                printf("***VOCE GANHOU 5%% DE DESCONTO***");
+        }
+
+        printf("\n\n\n***EMITINDO RELATORIO DA COMPRA***\n");
+        Sleep(750);
+
+        printf("NOME: %s\n",nome);
+        printf("CPF: %s\n",cpf);
+        printf("TELEFONE: %s\n",telefone);
+        printf("ENDERECO: Rua %sBairro %sCEP: %s",rua,bairro,cep);
+        if(pagamento == 'c' || pagamento == 'C')
+                printf("\nPAGAMENTO: %dx de R$%.2f\n\n\n",parcela,dvd);
+        else if(pagamento =='b' || pagamento == 'B')
+        {
+                printf("\nPAGAMENTO: R$%.2f no boleto com 5%% de desconto",valor);
+                printf("\n***VALOR TOTAL DE R$%.2f***\n\n\n",valor*0.95);
+        }
+
+
+} 
