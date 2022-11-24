@@ -29,11 +29,6 @@ typedef struct {
 	//categorias de atuação da empresa
 	int categorias[10];
 	int categoriasFilhas[30];
-	
-	//funcionários
-	int codigo[10];
-	int cargo[10];
-	int emailFuncionario[10][50];
 } company_card;
 
 int outCheckoutClient(company_card company) {
