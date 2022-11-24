@@ -18,9 +18,10 @@ void headerRegistration () {
 	horizontalLine();
 	
 	verticalLine(1);
-	printf("| Bem vindo ao sistema de cadastro de usuários!  |\n", setlocale(LC_ALL,""));
+	printf("| Bem vindo ao sistema de cadastro de            |\n", setlocale(LC_ALL,""));
+	printf("| Prestadores de serviço de nossa plataforma!    |\n", setlocale(LC_ALL,""));
 	verticalLine(2);
-	printf("| Falta pouco para ter acesso ao mundo da        |\n");
+	printf("| Falta pouco para vender seus produtos de       |\n");
 	printf("| prototipação 3D!                               |\n", setlocale(LC_ALL,""));
 	verticalLine(2);
 	printf("| Como deseja continuar?                         |\n", setlocale(LC_ALL,""));
@@ -31,13 +32,13 @@ void headerRegistration () {
 	horizontalLine();
 }
 
-void outCpfInfo() {
+void outCNPJInfo() {
 	printf("\n\n");
 	horizontalLine();
 	
 	verticalLine(1);
-	printf("| Certo! Agora vamos receber suas                |\n", setlocale(LC_ALL,""));
-	printf("| informações pessoais!                          |\n", setlocale(LC_ALL,""));
+	printf("| Certo! Agora vamos receber as                  |\n", setlocale(LC_ALL,""));
+	printf("| informações da empresa!                        |\n", setlocale(LC_ALL,""));
 	verticalLine(1);
 	
 	horizontalLine();

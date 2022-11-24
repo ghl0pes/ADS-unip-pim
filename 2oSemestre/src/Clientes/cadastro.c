@@ -190,7 +190,7 @@ int main() {
 	
 	printf("Digite seu nome completo: ");
 	fflush(stdin);
-	scanf("%s", client.nome);
+	fgets(client.nome, 30, stdin);
 	
 	// -------------- CPF --------------
 	char cpf[15];

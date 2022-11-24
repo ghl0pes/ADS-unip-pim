@@ -7,6 +7,7 @@
 //imported functions
 #include "./snippets/outputs.c"
 #include "./snippets/middlewares/validDate.c"
+#include "./snippets/validate.c"
 
 typedef struct {
 	//infos pessoais
@@ -97,8 +98,8 @@ int outCheckoutClient(company_card company) {
 	scanf("%d", &check);
 	
 	return check;
-}*/
-
+}
+*/
 int main() {
 	company_card company;
 	
@@ -175,13 +176,13 @@ int main() {
 					goto recieveCellphone;
 				}
 				
-				confirmCode:
+				confirmCodePhone:
 					printf("Enviamos um código de confirmação /(1234)/ por SMS, digite para continuar: ", setlocale(LC_ALL,""));
 					scanf("%s", confirmationCode);
 					
 					if(strcmp(confirmationCode, "1234") != 0) {
 						printf("\n -- Códido de confirmação inválido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
-						goto confirmCode;
+						goto confirmCodePhone;
 					}
 					
 				strcpy(company.telefone, phone);
@@ -191,47 +192,64 @@ int main() {
 				goto optRegistration;
 		}
 	
-	/*outCpfInfo();
+	outCNPJInfo();
 	
-	printf("Digite seu nome completo: ");
+	printf("Digite o nome empresarial da companhia: ");
 	fflush(stdin);
+	fgets(company.nomeEmpresa, 30, stdin);
 	
-	// -------------- CPF --------------
-	char cnpj[15];
+	// -------------- CNPJ --------------
+	char cnpj[14];
+	int verificaUm[12] = {5,4,3,2,9,8,7,6,5,4,3,2}, verificaDois[13] = {6,5,4,3,2,9,8,7,6,5,4,3,2}; 
+	int somatorio = 0, primeiro, segundo;
 	validateCNPJ:	
-		printf("Cnpj: ");
-		fflush(stdin);
+		printf("Digite o CNPJ a ser validado: ");
 		scanf("%s", cnpj);
 		
-		if(strlen(cnpj) != 11) {
-			printf("-- O CNPJ não é válido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
+		if(strlen(cnpj) != 14) {
+			printf("CNPJ precisa ter 14 algarismos. Digite novamente!");
 			goto validateCNPJ;
 		}
-		
-		i = 0; j = 10;
-		int sum = 0;
-		for(i = 0; i < (strlen(cnpj) - 2); i++){
-			sum += (cnpj[i] - '0') * j;
-			j--;
+				
+		for (i = 0; i < 12; i++) {
+			somatorio += (cnpj[i] - '0') * verificaUm[i];
 		}
 		
-		if(((sum * 10) % 11) != (cnpj[9] - '0')) {
-			printf("-- O primeiro dígito verificador não é válido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
-			goto validateCNPJ;
+		primeiro = (somatorio % 11);
+		
+		if (primeiro < 2) {
+			if ((cnpj[strlen(cnpj) -2] - '0') != 0) {
+				printf("Primeiro dígito verificador é inválido. Digite novamente!\n", setlocale(LC_ALL,""));
+				goto validateCNPJ;
+			}
+		} else {
+			if ((11 - primeiro) != (cnpj[strlen(cnpj) -2] - '0')) {
+				printf("Primeiro dígito verificador é inválido. Digite novamente!\n", setlocale(LC_ALL,""));
+				goto validateCNPJ;
+			}
 		}
 		
-		j = 11; sum = 0;
-		for(i = 0; i < (strlen(cpf) - 1); i++){
-			sum += (cpf[i] - '0') * j;
-			j--;
+		somatorio = 0;
+		for (i = 0; i < 13; i++) {
+			somatorio += (cnpj[i] - '0') * verificaDois[i];
 		}
 		
-		if(((sum * 10) % 11) != (cpf[10] - '0')) {
-			printf("-- O segundo dígito verificador não é válido. Preencha novamente, por favor! --\n\n", setlocale(LC_ALL,""));
-			goto validateCNPJ;
+		segundo = (somatorio % 11);
+		if (segundo < 2) {
+			if ((cnpj[strlen(cnpj) -1] - '0') != 0) {
+				printf("Segundo dígito verificador é inválido. Digite novamente!\n", setlocale(LC_ALL,""));
+				validaCNPJ();
+			}
+		} else {
+			if ((11 - segundo) != (cnpj[strlen(cnpj) -1] - '0')) {
+				printf("Segundo dígito verificador é inválido. Digite novamente!\n", setlocale(LC_ALL,""));
+				validaCNPJ();
+			}
 		}
 		
 	strcpy(company.cnpj, cnpj);
+	printf("%s", company.cnpj);
+	/*
 	// -------------- SEXO DO CLIENTE --------------
 	char optSex;
 	recieveClientSex: 
