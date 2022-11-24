@@ -50,8 +50,8 @@ void outAddressInfo() {
 	horizontalLine();
 	
 	verticalLine(1);
-	printf("| Ótimo! Agora são suas informações              |\n", setlocale(LC_ALL,""));
-	printf("| de endereço!                                   |\n", setlocale(LC_ALL,""));
+	printf("| Ótimo! Agora são as informações de             |\n", setlocale(LC_ALL,""));
+	printf("| endereço da empresa!                           |\n", setlocale(LC_ALL,""));
 	verticalLine(1);
 	
 	horizontalLine();
@@ -63,7 +63,8 @@ void outPreferencesInfo() {
 	horizontalLine();
 	
 	verticalLine(1);
-	printf("| Agora me conte. Quais são suas preferências?   |\n", setlocale(LC_ALL,""));
+	printf("| Agora me conte. Quais são os segmentos         |\n", setlocale(LC_ALL,""));
+	printf("| da impressão 3D que a empresa atua?            |\n", setlocale(LC_ALL,""));
 	verticalLine(1);
 	
 	horizontalLine();
@@ -103,7 +104,7 @@ void success() {
 	
 	verticalLine(1);
 	printf("| Cadastro realizado com sucesso! Aproveite a    |\n", setlocale(LC_ALL,""));
-	printf("| plataforma e boas compras :D                   |\n", setlocale(LC_ALL,""));
+	printf("| plataforma e boas vendas :D                    |\n", setlocale(LC_ALL,""));
 	verticalLine(1);
 	
 	horizontalLine();

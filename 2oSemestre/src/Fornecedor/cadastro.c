@@ -12,10 +12,11 @@
 typedef struct {
 	//infos pessoais
 	char nomeEmpresa[30];
-	char razaoSocial[30];
 	char cnpj[15];
 	char email[30];
 	char telefone[30];
+	char naturezaJuridica[10];
+	char dataAbertura[10];
 	
 	//infos de endereço
 	char cep[15];
@@ -24,7 +25,6 @@ typedef struct {
 	char complemento[30];
 	char bairro[30];
 	char referenciaEndereco[30];
-	char situacaoCadastral;
 	
 	//categorias de atuação da empresa
 	int categorias[10];
@@ -35,7 +35,7 @@ typedef struct {
 	int cargo[10];
 	int emailFuncionario[10][50];
 } company_card;
-/*
+
 int outCheckoutClient(company_card company) {
 	system("cls");
 	horizontalLine();
@@ -43,13 +43,13 @@ int outCheckoutClient(company_card company) {
 	printf("Confira seus dados para confirmar o cadastro na plataforma.\n\n", setlocale(LC_ALL,""));
 	
 	horizontalLine();
-	printf("--- Dados Pessoais ---\n");
+	printf("--- Dados da empresa ---\n");
 	printf("| Nome: %s\n", company.nomeEmpresa);
-	printf("| Email: %s\n", company.email);
-	printf("| CPF: %s\n", company.cpf);
-	printf("| Sexo: %c\n", company.sexo);
+	printf("| CNPJ: %s\n", company.cnpj);
+	printf("| Natureza Jurídica: %s\n", company.naturezaJuridica);
+	printf("| Data de abertura: %s\n\n", company.dataAbertura);
+	printf("| Email: %s\n", company.email);	
 	printf("| Telefone: %s\n", company.telefone);
-	printf("| Data de nascimento: %s\n\n", company.datanascimento);
 	
 	horizontalLine();
 	printf("--- Dados de endereço ---\n");
@@ -60,17 +60,17 @@ int outCheckoutClient(company_card company) {
 	printf("| Referência do endereço: %s\n\n", company.referenciaEndereco);
 	
 	horizontalLine();
-	printf("--- Categorias de interesse ---\n");
+	printf("--- Categorias de atuação ---\n");
 	int i = 0;
 	while(company.categorias[i] != 0 ){
 		if(company.categorias[i] < 10) {
-			printf("| -%d\n", companycliente.categorias[i]); 
+			printf("| -%d\n", company.categorias[i]); 
 			int j = 0;
 			while(company.categoriasFilhas[j] != 0) {
 				switch(company.categorias[i]) {
 					case 1:
 						if(company.categoriasFilhas[j] > 10 && company.categoriasFilhas[j] <= 16)
-							printf("| --%d\n", companycliente.categoriasFilhas[j]); 
+							printf("| --%d\n", company.categoriasFilhas[j]); 
 						break;
 					case 2:
 						if(company.categoriasFilhas[j] > 20 && company.categoriasFilhas[j] <= 24)
@@ -99,7 +99,7 @@ int outCheckoutClient(company_card company) {
 	
 	return check;
 }
-*/
+
 int main() {
 	company_card company;
 	
@@ -198,12 +198,22 @@ int main() {
 	fflush(stdin);
 	fgets(company.nomeEmpresa, 30, stdin);
 	
+	/* -------------- NATUREZA JURÍDICA -------------- */
+	printf("Qual a natureza jurídica da empresa?\n");
+	printf("| MEI\n");
+	printf("| EI\n");
+	printf("| EIRELI\n");
+	printf("| S/A\n");
+	printf("| LTDA\n");
+	printf("| SLU\n");
+	scanf("%s", company.naturezaJuridica);
+	
 	// -------------- CNPJ --------------
 	char cnpj[14];
 	int verificaUm[12] = {5,4,3,2,9,8,7,6,5,4,3,2}, verificaDois[13] = {6,5,4,3,2,9,8,7,6,5,4,3,2}; 
 	int somatorio = 0, primeiro, segundo;
 	validateCNPJ:	
-		printf("Digite o CNPJ a ser validado: ");
+		printf("CNPJ da empresa: ");
 		scanf("%s", cnpj);
 		
 		if(strlen(cnpj) != 14) {
@@ -248,29 +258,14 @@ int main() {
 		}
 		
 	strcpy(company.cnpj, cnpj);
-	printf("%s", company.cnpj);
-	/*
-	// -------------- SEXO DO CLIENTE --------------
-	char optSex;
-	recieveClientSex: 
-		printf("Sexo: \n");
-		printf("| M - Masculino\n| F - Feminino\n| N - Prefiro não informar\n\n", setlocale(LC_ALL,""));
-		
-		fflush(stdin);
-		scanf("%c", &optSex);
-		
-		if((optSex != 'M' && optSex != 'm') && (optSex != 'F' && optSex != 'f') && (optSex != 'N' && optSex != 'n')) {
-			printf("Opção inválida! Preencha novamente, por favor.", setlocale(LC_ALL,""));
-			goto recieveClientSex;
-		}
-	company.sexo = optSex;
 	
-	// -------------- DATA DE ANIVERSÁRIO --------------
+	
+	// -------------- DATA DE ABERTURA --------------
 	char strDay[2], strMonth[2], strYear[4];
 	Date getDate = {0};
 	int status = 0;
 	recieveBirthDate:	    
-	    printf("Data de nascimento (dd/mm/YYYY): ");
+	    printf("Data de abertura (dd/mm/YYYY): ");
 	    scanf("%d/%d/%d",&getDate.dd,&getDate.mm,&getDate.yyyy);
 	    
 	    if (isValidDate(&getDate) == 0) {
@@ -282,9 +277,9 @@ int main() {
 		itoa(getDate.mm, strMonth, 10);
 		itoa(getDate.yyyy, strYear, 10);
 		
-	strcpy(company.datanascimento, (strcat(strcat(strcat(strDay, "/"), strcat(strMonth, "/")), strYear)));
+	strcpy(company.dataAbertura, (strcat(strcat(strcat(strDay, "/"), strcat(strMonth, "/")), strYear)));
 	
-	// -------------- ENDEREÇO DO CLIENTE --------------
+	// -------------- ENDEREÇO DA EMPRESA --------------
 	outAddressInfo();
 	recieveAddress:
 		printf("Endereço: ");
@@ -314,12 +309,12 @@ int main() {
 	
 	chooseCategory:
 	do {
-		printf("Qual tipo de produto é de seu interesse?\n1 - Prototipação para indústria\n2 - Decoração\n3 - Área médica\n4 - Artigos personalizados\n5 - Outros\n0 - Não desejo cadastrar isso agora\n\n", setlocale(LC_ALL,""));
+		printf("Qual tipo de produto a empresa produz?\n1 - Prototipação para indústria\n2 - Decoração\n3 - Área médica\n4 - Artigos personalizados\n5 - Outros\n0 - Não desejo cadastrar isso agora\n\n", setlocale(LC_ALL,""));
 		fflush(stdin);
 		scanf("%d", &company.categorias[i]);
 		horizontalLine();
 		
-		if(client.categorias[i] < 0 || client.categorias[i] > 5) {
+		if(company.categorias[i] < 0 || company.categorias[i] > 5) {
 			printf("Categoria inválida!. Preencha novamente, por favor!\n\n", setlocale(LC_ALL,""));
 			goto chooseCategory;
 		} else if (company.categorias[i] == 0) {
@@ -364,5 +359,5 @@ int main() {
 	} else {
 		success();
 		system("pause");
-	}	*/
+	}
 }
