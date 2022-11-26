@@ -166,8 +166,6 @@ int main (){
         printf("MENU DE OPCAO\n");
         printf("1 - Cadastrar Estoque\n");
         printf("2 - Consultar Estoque\n");
-//      printf("3 - Alterar\n");
-//      printf("4 - Remover\n");
         printf("5 - Finalizar\n");
         printf("Digite o numero da opcao desejada \n");
         scanf("%d",&opicao);
